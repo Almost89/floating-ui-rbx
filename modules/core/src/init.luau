@@ -7,6 +7,7 @@ local detectOverflow = require(script.detectOverflow).detectOverflow
 local hide = require(script.middleware.hide).hide
 local flip = require(script.middleware.flip).flip
 local size = require(script.middleware.size).size
+local arrow = require(script.middleware.arrow).arrow
 local offset = require(script.middleware.offset).offset
 
 export type Derivable<T> = _types.Derivable<T>
@@ -47,5 +48,6 @@ return {
 	hide = hide,
 	flip = flip,
 	size = size,
+	arrow = arrow,
 	offset = offset,
 }

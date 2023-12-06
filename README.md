@@ -27,7 +27,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
     - [x] `offset`
     - [ ] `shift`
     - [x] `flip`
-    - [ ] `arrow`
+    - [x] `arrow`
     - [ ] `autoPlacement`
     - [ ] `inline`
 - [x] [`utils`](/modules/rbx-dom/)
