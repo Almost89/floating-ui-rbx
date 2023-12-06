@@ -38,4 +38,4 @@ Currently there is no direct documentation for the Roblox version. Please refer 
 
 ## License
 
-Everything is under the [MIT License](https://opensource.org/license/mit/). Please see each individual packages' LICENSE file for details.
+Everything is under the [MIT License](https://opensource.org/license/mit/). Please see each package's LICENSE file for details.
