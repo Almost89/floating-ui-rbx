@@ -22,7 +22,7 @@ local evaluate, getAlignment, getSide, getSideAxis, max, min, _merge, await =
 
 type Promise<T...> = Promise.TypedPromise<T...>
 
-type DetectOverflowOptions = _detectOverflow.Options
+type DetectOverflowOptions = _detectOverflow.DetectOverflowOptions
 
 type Derivable<T> = _types.Derivable<T>
 type Middleware = _types.Middleware

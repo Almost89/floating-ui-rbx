@@ -22,7 +22,7 @@ type RootBoundary = _types.RootBoundary
 type SideObject = _types.SideObject
 type Promisable<T> = _types.Promisable<T>
 
-export type Options = {
+export type DetectOverflowOptions = {
 	--[[
 		The clipping element(s) or area in which overflow will be checked.
   		@default 'clippingAncestors'
@@ -62,12 +62,15 @@ export type Options = {
 	- 0 = lies flush with the boundary
 	@see https://floating-ui.com/docs/detectOverflow
 ]]
-function detectOverflow(state: MiddlewareState, options: (Options | Derivable<Options>)?): Promise<SideObject>
+function detectOverflow(
+	state: MiddlewareState,
+	options: (DetectOverflowOptions | Derivable<DetectOverflowOptions>)?
+): Promise<SideObject>
 	local _options = options or {}
 	local x, y, platform, rects, elements, strategy =
 		(state :: any).x, (state :: any).y, state.platform, state.rects, state.elements, state.strategy
 
-	local _evaluated: Options = evaluate(options, state)
+	local _evaluated: DetectOverflowOptions = evaluate(options, state)
 	local boundary, rootBoundary, elementContext, altBoundary, padding =
 		_evaluated.boundary or "clippingAncestors",
 		_evaluated.rootBoundary or "viewport",

@@ -15,7 +15,7 @@ local evaluate, sides, _merge, await = _utils.evaluate, _utils.sides, _utils.mer
 
 type Promise<T...> = Promise.TypedPromise<T...>
 
-type DetectOverflowOptions = _detectOverflow.Options
+type DetectOverflowOptions = _detectOverflow.DetectOverflowOptions
 
 type Derivable<T> = _types.Derivable<T>
 type Middleware = _types.Middleware
