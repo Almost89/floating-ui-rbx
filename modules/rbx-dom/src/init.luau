@@ -16,4 +16,10 @@ end
 return {
 	platform = platform,
 	computePosition = computePosition,
+
+	hide = core.hide,
+	flip = core.flip,
+	size = core.size,
+	arrow = core.arrow,
+	offset = core.offset,
 }
