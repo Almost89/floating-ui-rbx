@@ -8,7 +8,7 @@ local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
 local _utils = require(_Packages["floating-ui-utils"])
 
-local Array = require(_Packages.LuauPolyfill).Array
+local Array = require(_Packages.Collections).Array
 local evaluate, getAlignment, getSide, getSideAxis, _merge, await =
 	_utils.evaluate, _utils.getAlignment, _utils.getSide, _utils.getSideAxis, _utils.merge, _utils.await
 

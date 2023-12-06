@@ -6,13 +6,13 @@ local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
-local _LuauPolyfill = require(_Packages.LuauPolyfill)
+local Boolean = require(_Packages.Boolean)
 local _utils = require(_Packages["floating-ui-utils"])
 
 type Promise<T...> = Promise.TypedPromise<T...>
 
 local _merge, await = _utils.merge, _utils.await
-local Array, Boolean = _LuauPolyfill.Array, _LuauPolyfill.Boolean
+local Array = require(_Packages.Collections).Array
 local computeCoordsFromPlacement = require(_Package.computeCoordsFromPlacement).computeCoordsFromPlacement
 
 type ComputePosition = _types.ComputePosition

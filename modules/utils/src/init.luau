@@ -4,10 +4,10 @@
 local _Packages = script.Parent
 
 local _types = require(script.types)
+local String = require(_Packages.String)
 local Promise = require(_Packages.Promise)
-local _LuauPolyfill = require(_Packages.LuauPolyfill)
 
-local Array, String = _LuauPolyfill.Array, _LuauPolyfill.String
+local Array = require(_Packages.Collections).Array
 
 type Promise<T...> = Promise.TypedPromise<T...>
 

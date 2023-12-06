@@ -9,7 +9,7 @@ local Promise = require(_Packages.Promise)
 local _utils = require(_Packages["floating-ui-utils"])
 local _detectOverflow = require(_Package.detectOverflow)
 
-local Array = require(_Packages.LuauPolyfill).Array
+local Array = require(_Packages.Collections).Array
 local detectOverflow = _detectOverflow.detectOverflow
 local evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide, _merge, await =
 	_utils.evaluate,

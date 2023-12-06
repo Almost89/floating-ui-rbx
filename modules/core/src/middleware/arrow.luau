@@ -6,9 +6,9 @@ local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
+local Boolean = require(_Packages.Boolean)
 local _utils = require(_Packages["floating-ui-utils"])
 
-local Boolean = require(_Packages.LuauPolyfill).Boolean
 local clamp, evaluate, getAlignment, getAlignmentAxis, getAxisLength, getPaddingObject, mathMin, _merge, await =
 	_utils.clamp,
 	_utils.evaluate,
