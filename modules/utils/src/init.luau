@@ -1,6 +1,7 @@
 -- Copyright (c) 2021-present Floating UI contributors
 --!strict
 
+local Promise = require(script.Parent.Promise)
 local Array, String = nil, nil
 do
 	local Packages = script.Parent
@@ -9,6 +10,8 @@ do
 
 	Array, String = LuauPolyfill.Array, LuauPolyfill.String
 end
+
+type Promise<T...> = Promise.TypedPromise<T...>
 
 local _types = require(script.types)
 
@@ -54,7 +57,10 @@ local oppositeAlignmentMap = table.freeze({
 })
 
 -- extra utils start
-local function _merge(...: { [any]: any }?): { [any]: any }
+local function await<T>(value: T | Promise<T>): T
+	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
+end
+local function merge(...: { [any]: any }?): { [any]: any }
 	local merged = nil
 	for index = 1, select("#", ...) do
 		local t = select(index, ...)
@@ -235,4 +241,7 @@ return {
 	expandPaddingObject = expandPaddingObject,
 	getPaddingObject = getPaddingObject,
 	rectToClientRect = rectToClientRect,
+
+	await = await,
+	merge = merge,
 }

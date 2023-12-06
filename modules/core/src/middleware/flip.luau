@@ -10,8 +10,8 @@ local _detectOverflow = require(_Package.detectOverflow)
 
 local Array = nil
 local detectOverflow = _detectOverflow.detectOverflow
-local evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide =
-	nil, nil, nil, nil, nil, nil
+local evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide, _merge, await =
+	nil, nil, nil, nil, nil, nil, nil, nil
 do
 	local Packages = _Package.Parent
 
@@ -19,13 +19,15 @@ do
 	local utils = require(Packages["floating-ui-utils"])
 
 	Array = LuauPolyfill.Array
-	evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide =
+	evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide, _merge, await =
 		utils.evaluate,
 		utils.getAlignmentSides,
 		utils.getExpandedPlacements,
 		utils.getOppositeAxisPlacements,
 		utils.getOppositePlacement,
-		utils.getSide
+		utils.getSide,
+		utils.merge,
+		utils.await
 end
 
 type Promise<T...> = Promise.TypedPromise<T...>
@@ -72,28 +74,6 @@ export type FlipOptions = DetectOverflowOptions & {
 	]]
 	flipAlignment: boolean?,
 }
-
--- extra utils start
-local function await<T>(value: _types.Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 --[[
 	Optimizes the visibility of the floating element by flipping the `placement`

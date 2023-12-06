@@ -9,13 +9,20 @@ local Promise = require(_Packages.Promise)
 local _detectOverflow = require(_Package.detectOverflow)
 
 local detectOverflow = _detectOverflow.detectOverflow
-local evaluate, getAlignment, getSide, getSideAxis, max, min = nil, nil, nil, nil, nil, nil
+local evaluate, getAlignment, getSide, getSideAxis, max, min, _merge, await = nil, nil, nil, nil, nil, nil, nil, nil
 do
 	local Packages = _Package.Parent
 
 	local utils = require(Packages["floating-ui-utils"])
-	evaluate, getAlignment, getSide, getSideAxis, max, min =
-		utils.evaluate, utils.getAlignment, utils.getSide, utils.getSideAxis, utils.max, utils.min
+	evaluate, getAlignment, getSide, getSideAxis, max, min, _merge, await =
+		utils.evaluate,
+		utils.getAlignment,
+		utils.getSide,
+		utils.getSideAxis,
+		utils.max,
+		utils.min,
+		utils.merge,
+		utils.await
 end
 
 type Promise<T...> = Promise.TypedPromise<T...>
@@ -34,28 +41,6 @@ export type SizeOptions = DetectOverflowOptions & {
 	]]
 	apply: (args: MiddlewareState & { availableWidth: number, availableHeight: number }) -> nil, -- Promise<nil>,
 }
-
--- extra utils start
-local function await<T>(value: _types.Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 --[[
 	Provides data that allows you to change the size of the floating element —

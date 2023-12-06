@@ -5,11 +5,12 @@ local _Package = script.Parent
 local _Packages = _Package.Parent
 local Promise = require(_Packages.Promise)
 
-local evaluate, getPaddingObject, rectToClientRect = nil, nil, nil
+local evaluate, getPaddingObject, rectToClientRect, _merge, await = nil, nil, nil, nil, nil
 do
 	local utils = require(_Packages["floating-ui-utils"])
 
-	evaluate, getPaddingObject, rectToClientRect = utils.evaluate, utils.getPaddingObject, utils.rectToClientRect
+	evaluate, getPaddingObject, rectToClientRect, _merge, await =
+		utils.evaluate, utils.getPaddingObject, utils.rectToClientRect, utils.merge, utils.await
 end
 
 local _types = require(_Package.types)
@@ -56,28 +57,6 @@ export type Options = {
 	]]
 	padding: Padding?,
 }
-
--- extra utils start
-local function await<T>(value: Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 --[[
 	Resolves with an object of overflow side offsets that determine how much the

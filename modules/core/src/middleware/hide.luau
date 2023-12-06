@@ -10,13 +10,13 @@ local _detectOverflow = require(_Package.detectOverflow)
 
 local detectOverflow = _detectOverflow.detectOverflow
 local Array = nil
-local evaluate, sides = nil, nil
+local evaluate, sides, _merge, await = nil, nil, nil, nil
 do
 	local LuauPolyfill = require(_Packages.LuauPolyfill)
 	local utils = require(_Packages["floating-ui-utils"])
 
 	Array = LuauPolyfill.Array
-	evaluate, sides = utils.evaluate, utils.sides
+	evaluate, sides, _merge, await = utils.evaluate, utils.sides, utils.merge, utils.await
 end
 
 type Promise<T...> = Promise.TypedPromise<T...>
@@ -27,28 +27,6 @@ type Derivable<T> = _types.Derivable<T>
 type Middleware = _types.Middleware
 type Rect = _types.Rect
 type SideObject = _types.SideObject
-
--- extra utils start
-local function await<T>(value: _types.Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 local function getSideOffsets(overflow: SideObject, rect: Rect): SideObject
 	return {

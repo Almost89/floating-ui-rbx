@@ -6,24 +6,14 @@ local _Packages = _ReplicatedStorage.Packages
 
 local Promise = require(_Packages.Promise)
 local _core = require(_Packages["floating-ui-core"])
+local _utils = require(_Packages["floating-ui-utils"])
 
 type Platform = _core.Platform
 
 type Promisable<T> = any
 type Promise<T> = any
 
--- extra utils start
-local function await<T>(value: Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(a: { [any]: any }, b: { [any]: any }): { [any]: any }
-	local merged = table.clone(a)
-	for key, value in b do
-		merged[key] = value
-	end
-	return merged
-end
--- extra utils end
+local _merge, await = _utils.merge, _utils.await
 
 local computePosition = _core.computePosition
 

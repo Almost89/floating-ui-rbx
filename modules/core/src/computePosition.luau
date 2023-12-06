@@ -10,11 +10,14 @@ type Promise<T...> = Promise.TypedPromise<T...>
 
 local Array, Boolean = nil, nil
 local computeCoordsFromPlacement = nil
+local _merge, await = nil, nil
 do
 	local LuauPolyfill = require(_Packages.LuauPolyfill)
+	local utils = require(_Packages["floating-ui-utils"])
 
 	Array, Boolean = LuauPolyfill.Array, LuauPolyfill.Boolean
 	computeCoordsFromPlacement = require(_Package.computeCoordsFromPlacement).computeCoordsFromPlacement
+	_merge, await = utils.merge, utils.await
 end
 
 local _types = require(_Package.types)
@@ -24,28 +27,6 @@ type ComputePositionReturn = _types.ComputePositionReturn
 type Middleware = _types.Middleware
 type MiddlewareData = _types.MiddlewareData
 type Promisable<T> = _types.Promisable<T>
-
--- extra utils start
-local function await<T>(value: Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 --[[
 	Computes the `x` and `y` coordinates that will place the floating element

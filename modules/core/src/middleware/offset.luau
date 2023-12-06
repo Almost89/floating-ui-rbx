@@ -8,13 +8,14 @@ local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
 
 local Array = nil
-local evaluate, getAlignment, getSide, getSideAxis = nil, nil, nil, nil
+local evaluate, getAlignment, getSide, getSideAxis, _merge, await = nil, nil, nil, nil, nil, nil
 do
 	local LuauPolyfill = require(_Packages.LuauPolyfill)
 	local utils = require(_Packages["floating-ui-utils"])
 
 	Array = LuauPolyfill.Array
-	evaluate, getAlignment, getSide, getSideAxis = utils.evaluate, utils.getAlignment, utils.getSide, utils.getSideAxis
+	evaluate, getAlignment, getSide, getSideAxis, _merge, await =
+		utils.evaluate, utils.getAlignment, utils.getSide, utils.getSideAxis, utils.merge, utils.await
 end
 
 type Promise<T...> = Promise.TypedPromise<T...>
@@ -54,28 +55,6 @@ type OffsetValue = number | {
 -- For type backwards-compatibility, the `OffsetOptions` type was also
 -- Derivable.
 export type OffsetOptions = OffsetValue | Derivable<OffsetValue>
-
--- extra utils start
-local function await<T>(value: _types.Promisable<T>): T
-	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
-end
-local function _merge(...: { [any]: any }?): { [any]: any }
-	local merged = nil
-	for index = 1, select("#", ...) do
-		local t = select(index, ...)
-		if type(t) == "table" then
-			if not merged then
-				merged = table.clone(t)
-			else
-				for key, value in t do
-					merged[key] = value
-				end
-			end
-		end
-	end
-	return merged or {}
-end
--- extra utils end
 
 local function convertValueToCoords(state: MiddlewareState, options: OffsetOptions): Promise<Coords>
 	local placement, platform, elements = state.placement, state.platform, state.elements
