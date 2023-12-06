@@ -4,23 +4,16 @@
 local _Package = script.Parent
 local _Packages = _Package.Parent
 
+local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
+local _LuauPolyfill = require(_Packages.LuauPolyfill)
+local _utils = require(_Packages["floating-ui-utils"])
 
 type Promise<T...> = Promise.TypedPromise<T...>
 
-local Array, Boolean = nil, nil
-local computeCoordsFromPlacement = nil
-local _merge, await = nil, nil
-do
-	local LuauPolyfill = require(_Packages.LuauPolyfill)
-	local utils = require(_Packages["floating-ui-utils"])
-
-	Array, Boolean = LuauPolyfill.Array, LuauPolyfill.Boolean
-	computeCoordsFromPlacement = require(_Package.computeCoordsFromPlacement).computeCoordsFromPlacement
-	_merge, await = utils.merge, utils.await
-end
-
-local _types = require(_Package.types)
+local _merge, await = _utils.merge, _utils.await
+local Array, Boolean = _LuauPolyfill.Array, _LuauPolyfill.Boolean
+local computeCoordsFromPlacement = require(_Package.computeCoordsFromPlacement).computeCoordsFromPlacement
 
 type ComputePosition = _types.ComputePosition
 type ComputePositionReturn = _types.ComputePositionReturn

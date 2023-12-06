@@ -6,29 +6,20 @@ local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
+local _utils = require(_Packages["floating-ui-utils"])
 local _detectOverflow = require(_Package.detectOverflow)
 
-local Array = nil
+local Array = require(_Packages.LuauPolyfill).Array
 local detectOverflow = _detectOverflow.detectOverflow
 local evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide, _merge, await =
-	nil, nil, nil, nil, nil, nil, nil, nil
-do
-	local Packages = _Package.Parent
-
-	local LuauPolyfill = require(Packages.LuauPolyfill)
-	local utils = require(Packages["floating-ui-utils"])
-
-	Array = LuauPolyfill.Array
-	evaluate, getAlignmentSides, getExpandedPlacements, getOppositeAxisPlacements, getOppositePlacement, getSide, _merge, await =
-		utils.evaluate,
-		utils.getAlignmentSides,
-		utils.getExpandedPlacements,
-		utils.getOppositeAxisPlacements,
-		utils.getOppositePlacement,
-		utils.getSide,
-		utils.merge,
-		utils.await
-end
+	_utils.evaluate,
+	_utils.getAlignmentSides,
+	_utils.getExpandedPlacements,
+	_utils.getOppositeAxisPlacements,
+	_utils.getOppositePlacement,
+	_utils.getSide,
+	_utils.merge,
+	_utils.await
 
 type Promise<T...> = Promise.TypedPromise<T...>
 

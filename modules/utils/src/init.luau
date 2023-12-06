@@ -1,19 +1,15 @@
 -- Copyright (c) 2021-present Floating UI contributors
 --!strict
 
-local Promise = require(script.Parent.Promise)
-local Array, String = nil, nil
-do
-	local Packages = script.Parent
-
-	local LuauPolyfill = require(Packages.LuauPolyfill)
-
-	Array, String = LuauPolyfill.Array, LuauPolyfill.String
-end
-
-type Promise<T...> = Promise.TypedPromise<T...>
+local _Packages = script.Parent
 
 local _types = require(script.types)
+local Promise = require(_Packages.Promise)
+local _LuauPolyfill = require(_Packages.LuauPolyfill)
+
+local Array, String = _LuauPolyfill.Array, _LuauPolyfill.String
+
+type Promise<T...> = Promise.TypedPromise<T...>
 
 export type Alignment = _types.Alignment
 export type Axis = _types.Axis
@@ -198,7 +194,7 @@ function getOppositePlacement<T>(placement: T & string): T
 end
 
 function expandPaddingObject(padding: PartialSideObject): SideObject
-	return _merge({ top = 0, right = 0, bottom = 0, left = 0 }, padding)
+	return merge({ top = 0, right = 0, bottom = 0, left = 0 }, padding)
 end
 
 function getPaddingObject(padding: Padding): SideObject
@@ -208,7 +204,7 @@ function getPaddingObject(padding: Padding): SideObject
 end
 
 function rectToClientRect(rect: Rect): ClientRectObject
-	return _merge(rect, {
+	return merge(rect, {
 		top = rect.y,
 		left = rect.x,
 		right = rect.x + rect.width,

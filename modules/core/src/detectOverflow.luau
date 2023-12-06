@@ -3,17 +3,13 @@
 
 local _Package = script.Parent
 local _Packages = _Package.Parent
-local Promise = require(_Packages.Promise)
-
-local evaluate, getPaddingObject, rectToClientRect, _merge, await = nil, nil, nil, nil, nil
-do
-	local utils = require(_Packages["floating-ui-utils"])
-
-	evaluate, getPaddingObject, rectToClientRect, _merge, await =
-		utils.evaluate, utils.getPaddingObject, utils.rectToClientRect, utils.merge, utils.await
-end
 
 local _types = require(_Package.types)
+local Promise = require(_Packages.Promise)
+local _utils = require(_Packages["floating-ui-utils"])
+
+local evaluate, getPaddingObject, rectToClientRect, _merge, await =
+	_utils.evaluate, _utils.getPaddingObject, _utils.rectToClientRect, _utils.merge, _utils.await
 
 type Promise<T...> = Promise.TypedPromise<T...>
 

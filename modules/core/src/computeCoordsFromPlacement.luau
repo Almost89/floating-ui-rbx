@@ -2,18 +2,13 @@
 --!strict
 
 local _Package = script.Parent
-
-local getAlignment, getAlignmentAxis, getAxisLength, getSide, getSideAxis = nil, nil, nil, nil, nil
-do
-	local Packages = _Package.Parent
-
-	local utils = require(Packages["floating-ui-utils"])
-
-	getAlignment, getAlignmentAxis, getAxisLength, getSide, getSideAxis =
-		utils.getAlignment, utils.getAlignmentAxis, utils.getAxisLength, utils.getSide, utils.getSideAxis
-end
+local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
+local _utils = require(_Packages["floating-ui-utils"])
+
+local getAlignment, getAlignmentAxis, getAxisLength, getSide, getSideAxis =
+	_utils.getAlignment, _utils.getAlignmentAxis, _utils.getAxisLength, _utils.getSide, _utils.getSideAxis
 
 type Coords = _types.Coords
 type ElementRects = _types.ElementRects

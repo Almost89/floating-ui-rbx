@@ -6,18 +6,12 @@ local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
 local Promise = require(_Packages.Promise)
+local _utils = require(_Packages["floating-ui-utils"])
 local _detectOverflow = require(_Package.detectOverflow)
 
+local Array = require(_Packages.LuauPolyfill).Array
 local detectOverflow = _detectOverflow.detectOverflow
-local Array = nil
-local evaluate, sides, _merge, await = nil, nil, nil, nil
-do
-	local LuauPolyfill = require(_Packages.LuauPolyfill)
-	local utils = require(_Packages["floating-ui-utils"])
-
-	Array = LuauPolyfill.Array
-	evaluate, sides, _merge, await = utils.evaluate, utils.sides, utils.merge, utils.await
-end
+local evaluate, sides, _merge, await = _utils.evaluate, _utils.sides, _utils.merge, _utils.await
 
 type Promise<T...> = Promise.TypedPromise<T...>
 
