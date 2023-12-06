@@ -1,0 +1,37 @@
+{
+	"name": "floating-ui",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Packages": {
+				"$path": "Packages",
+				"floating-ui-core": {
+					"$path": "modules/core/default.project.json"
+				},
+				"floating-ui-utils": {
+					"$path": "modules/utils/default.project.json"
+				},
+				"floating-ui-rbx-dom": {
+					"$path": "modules/rbx-dom/default.project.json"
+				}
+			},
+			"DevPackages": {
+				"$path": "DevPackages"
+			}
+		},
+		"TestService": {
+			"$properties": {
+				"ExecuteWithStudioRun": true
+			},
+			"testRunner": {
+				"$path": "test-runner",
+				"floating-ui-core": {
+					"$path": "modules/core/test"
+				},
+				"floating-ui-utils": {
+					"$path": "modules/utils/test"
+				}
+			}
+		}
+	}
+}

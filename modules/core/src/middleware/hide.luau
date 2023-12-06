@@ -1,0 +1,125 @@
+-- Copyright (c) 2021-present Floating UI contributors
+--!strict
+
+local _Package = script.Parent.Parent
+local _Packages = _Package.Parent
+
+local _types = require(_Package.types)
+local Promise = require(_Packages.Promise)
+local _detectOverflow = require(_Package.detectOverflow)
+
+local detectOverflow = _detectOverflow.detectOverflow
+local Array = nil
+local evaluate, sides = nil, nil
+do
+	local LuauPolyfill = require(_Packages.LuauPolyfill)
+	local utils = require(_Packages["floating-ui-utils"])
+
+	Array = LuauPolyfill.Array
+	evaluate, sides = utils.evaluate, utils.sides
+end
+
+type Promise<T...> = Promise.TypedPromise<T...>
+
+type DetectOverflowOptions = _detectOverflow.Options
+
+type Derivable<T> = _types.Derivable<T>
+type Middleware = _types.Middleware
+type Rect = _types.Rect
+type SideObject = _types.SideObject
+
+-- extra utils start
+local function await<T>(value: _types.Promisable<T>): T
+	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
+end
+local function _merge(...: { [any]: any }?): { [any]: any }
+	local merged = nil
+	for index = 1, select("#", ...) do
+		local t = select(index, ...)
+		if type(t) == "table" then
+			if not merged then
+				merged = table.clone(t)
+			else
+				for key, value in t do
+					merged[key] = value
+				end
+			end
+		end
+	end
+	return merged or {}
+end
+-- extra utils end
+
+local function getSideOffsets(overflow: SideObject, rect: Rect): SideObject
+	return {
+		top = overflow.top - rect.height,
+		right = overflow.right - rect.width,
+		bottom = overflow.bottom - rect.height,
+		left = overflow.left - rect.width,
+	}
+end
+
+local function isAnySideFullyClipped(overflow: SideObject): boolean
+	return Array.some(sides, function(side: string)
+		return overflow[side] >= 0
+	end)
+end
+
+export type HideOptions = DetectOverflowOptions & {
+	--[[
+		The strategy used to determine when to hide the floating element.
+	]]
+	strategy: ("referenceHidden" | "escaped")?,
+}
+
+--[[
+	Provides data to hide the floating element in applicable situations, such as
+	when it is not in the same clipping context as the reference element.
+	@see https://floating-ui.com/docs/hide
+]]
+local hide = function(options: (HideOptions | Derivable<HideOptions>)?): Middleware
+	options = options or {}
+	return {
+		name = "hide",
+		options = options,
+		fn = function(state)
+			local rects = state.rects
+
+			local strategy, detectOverflowOptions = nil, nil
+			do
+				local evaluated = evaluate(options, state)
+				local evaluatedClone = table.clone(evaluated)
+
+				evaluatedClone.strategy = nil
+				strategy, detectOverflowOptions = evaluated.strategy or "referenceHidden", evaluatedClone
+			end
+
+			if strategy == "referenceHidden" then
+				local overflow =
+					await(detectOverflow(state, _merge(detectOverflowOptions, { elementContext = "reference" })))
+				local offsets = getSideOffsets(overflow, rects.reference)
+				return {
+					data = {
+						referenceHiddenOffsets = offsets,
+						referenceHidden = isAnySideFullyClipped(offsets),
+					},
+				}
+			elseif strategy == "escaped" then
+				local overflow = await(detectOverflow(state, _merge(detectOverflowOptions, { altBoundary = true })))
+				local offsets = getSideOffsets(overflow, rects.floating)
+				return {
+					data = {
+						escapedOffsets = offsets,
+						escaped = isAnySideFullyClipped(offsets),
+					},
+				}
+			else
+				return {}
+			end
+		end,
+	}
+end
+
+return {
+	hide = hide,
+}
