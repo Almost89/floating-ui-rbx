@@ -20,6 +20,7 @@ return {
 	hide = core.hide,
 	flip = core.flip,
 	size = core.size,
+	shift = core.shift,
 	arrow = core.arrow,
 	offset = core.offset,
 }

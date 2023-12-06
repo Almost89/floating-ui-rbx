@@ -7,6 +7,7 @@ local detectOverflow = require(script.detectOverflow).detectOverflow
 local hide = require(script.middleware.hide).hide
 local flip = require(script.middleware.flip).flip
 local size = require(script.middleware.size).size
+local shift = require(script.middleware.shift).shift
 local arrow = require(script.middleware.arrow).arrow
 local offset = require(script.middleware.offset).offset
 
@@ -49,5 +50,6 @@ return {
 	flip = flip,
 	size = size,
 	arrow = arrow,
+	shift = shift,
 	offset = offset,
 }

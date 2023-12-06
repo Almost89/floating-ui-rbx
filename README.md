@@ -25,7 +25,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
     - [x] `hide`
     - [x] `size`
     - [x] `offset`
-    - [ ] `shift`
+    - [x] `shift`
     - [x] `flip`
     - [x] `arrow`
     - [ ] `autoPlacement`
