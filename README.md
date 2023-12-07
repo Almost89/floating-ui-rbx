@@ -31,7 +31,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
     - [ ] `autoPlacement`
     - [ ] `inline`
 - [x] [`utils`](/modules/rbx-dom/)
-- [ ] [`rbx-dom`](/modules/rbx-dom/)
+- [x] [`rbx-dom`](/modules/rbx-dom/)
   - [x] platform
     - [x] `getElementRects`,`getDimensions`, and `getClippingRect`
 
