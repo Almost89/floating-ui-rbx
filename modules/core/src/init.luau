@@ -2,6 +2,7 @@
 --!strict
 
 local _types = require(script.types)
+
 local computePosition = require(script.computePosition).computePosition
 local detectOverflow = require(script.detectOverflow).detectOverflow
 local hide = require(script.middleware.hide).hide
@@ -10,6 +11,7 @@ local size = require(script.middleware.size).size
 local shift = require(script.middleware.shift).shift
 local arrow = require(script.middleware.arrow).arrow
 local offset = require(script.middleware.offset).offset
+local rectToClientRect = require(script.Parent["floating-ui-utils"]).rectToClientRect
 
 export type Derivable<T> = _types.Derivable<T>
 export type Platform = _types.Platform
@@ -38,14 +40,17 @@ export type Length = _types.Length
 export type Padding = _types.Padding
 export type Placement = _types.Placement
 export type Rect = _types.Rect
+export type Boundary = _types.Boundary
 export type RootBoundary = _types.RootBoundary
 export type Side = _types.Side
 export type SideObject = _types.SideObject
+export type VirtualElement = _types.VirtualElement
 export type Strategy = _types.Strategy
 
 return {
 	computePosition = computePosition :: ComputePosition,
 	detectOverflow = detectOverflow,
+	rectToClientRect = rectToClientRect,
 	hide = hide,
 	flip = flip,
 	size = size,

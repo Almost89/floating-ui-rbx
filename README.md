@@ -33,8 +33,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
 - [x] [`utils`](/modules/rbx-dom/)
 - [ ] [`rbx-dom`](/modules/rbx-dom/)
   - [x] platform
-    - [x] `getElementRects` and `getDimensions`
-    - [ ] figure out what `getClippingRect` is meant to do lol
+    - [x] `getElementRects`,`getDimensions`, and `getClippingRect`
 
 ## License
 
