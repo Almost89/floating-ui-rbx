@@ -17,7 +17,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
 
 ## Progress
 
-> Status: Usable... probably
+> Status: Usable... probably. I wouldn't suggest using this in production yet.
 
 - [ ] [`core`](/modules/core/)
   - [x] `computePosition`, `computeCoordsFromPlacement`, and `detectOverflow`
