@@ -1,6 +1,6 @@
 [package]
 name = "almost89/floating-ui-core"
-version = "0.1.0"
+version = "0.2.0"
 exclude = ["test"]
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"

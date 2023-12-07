@@ -1,9 +1,9 @@
 [package]
 name = "almost89/floating-ui-rbx-dom"
-version = "0.1.0"
+version = "0.1.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
 Collections = "jsdotlua/collections@1.2.3"
-floating-ui-core = "almost89/floating-ui-core@0.1.0"
+floating-ui-core = "almost89/floating-ui-core@0.2.0"
