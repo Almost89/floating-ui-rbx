@@ -43,7 +43,7 @@ function computePosition(reference: any, floating: any, config: any): Promise<Co
 	local resetCount = 0
 
 	local i = 1
-	while i < #validMiddleware do
+	while i <= #validMiddleware do
 		local _middleware = validMiddleware[i]
 		local name, fn = _middleware.name, _middleware.fn
 
