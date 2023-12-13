@@ -5,5 +5,5 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-Collections = "jsdotlua/collections@1.2.3"
+Collections = "jsdotlua/collections@1.2.5"
 floating-ui-core = "almost89/floating-ui-core@0.2.0"
