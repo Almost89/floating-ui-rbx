@@ -8,7 +8,7 @@
 # wally.toml
 
 [dependencies]
-FloatingUI = "alomost89/floating-ui-rbx-dom@0.1.0"
+FloatingUI = "alomost89/floating-ui-rbx-dom@0.2.0"
 ```
 
 ## Usage
