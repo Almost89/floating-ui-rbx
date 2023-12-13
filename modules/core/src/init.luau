@@ -2,11 +2,13 @@
 --!strict
 
 local _types = require(script.types)
+local _shift = require(script.middleware.shift)
 
+local shift = _shift.shift
+local limitShift = _shift.limitShift
 local hide = require(script.middleware.hide).hide
 local flip = require(script.middleware.flip).flip
 local size = require(script.middleware.size).size
-local shift = require(script.middleware.shift).shift
 local arrow = require(script.middleware.arrow).arrow
 local offset = require(script.middleware.offset).offset
 local detectOverflow = require(script.detectOverflow).detectOverflow
@@ -57,4 +59,5 @@ return {
 	arrow = arrow,
 	shift = shift,
 	offset = offset,
+	limitShift = limitShift,
 }

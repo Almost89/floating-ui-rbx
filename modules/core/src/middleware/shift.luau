@@ -5,9 +5,11 @@ local _Package = script.Parent.Parent
 local _Packages = _Package.Parent
 
 local _types = require(_Package.types)
+local _Collections = require(_Packages.Collections)
 local _utils = require(_Packages["floating-ui-utils"])
 local _detectOverflow = require(_Package.detectOverflow)
 
+local Array = _Collections.Array
 local detectOverflow = _detectOverflow.detectOverflow
 local clamp, evaluate, getOppositeAxis, getSide, getSideAxis, _merge, await =
 	_utils.clamp,
@@ -116,6 +118,112 @@ local shift = function(options: ShiftOptions | Derivable<ShiftOptions>): Middlew
 	}
 end
 
+type LimitShiftOffset = number | {
+	--[[
+		Offset the limiting of the axis that runs along the alignment of the
+		floating element.
+	]]
+	mainAxis: number?,
+	--[[
+		Offset the limiting of the axis that runs along the side of the
+		floating element.
+	]]
+	crossAxis: number?,
+}
+export type LimitShiftOptions = {
+	--[[
+		Offset when limiting starts. `0` will limit when the opposite edges of the
+		reference and floating elements are aligned.
+		- positive = start limiting earlier
+		- negative = start limiting later
+	]]
+	offset: (LimitShiftOffset | Derivable<LimitShiftOffset>)?,
+	--[[
+		Whether to limit the axis that runs along the alignment of the floating
+		element.
+	]]
+	mainAxis: boolean?,
+	--[[
+		Whether to limit the axis that runs along the side of the floating element.
+	]]
+	crossAxis: boolean?,
+}
+
+--[[
+	Built-in `limiter` that will stop `shift()` at a certain point.
+]]
+local limitShift = function(
+	options: (LimitShiftOptions | Derivable<LimitShiftOptions>)?
+): { options: any, fn: (state: MiddlewareState) -> Coords }
+	options = options or {}
+	return {
+		options = options,
+		fn = function(state)
+			local x, y, placement, rects, middlewareData =
+				state.x, state.y, state.placement, state.rects, state.middlewareData
+
+			local offset, checkMainAxis, checkCrossAxis = nil, nil, nil
+			do
+				local evaluated = evaluate(options, state)
+				offset, checkMainAxis, checkCrossAxis =
+					evaluated.offset or 0, evaluated.mainAxis or true, evaluated.crossAxis or true
+			end
+
+			local coords = { x = x, y = y }
+			local crossAxis = getSideAxis(placement :: any)
+			local mainAxis = getOppositeAxis(crossAxis :: any)
+
+			local mainAxisCoord = coords[mainAxis]
+			local crossAxisCoord = coords[crossAxis]
+
+			local rawOffset = evaluate(offset, state)
+			local computedOffset = if type(rawOffset) == "number"
+				then { mainAxis = rawOffset, crossAxis = 0 }
+				else _merge({ mainAxis = 0, crossAxis = 0 }, rawOffset)
+
+			if checkMainAxis then
+				local len = if mainAxis == "y" then "height" else "width"
+				local limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis
+				local limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis
+				if mainAxisCoord < limitMin then
+					mainAxisCoord = limitMin
+				elseif mainAxisCoord > limitMax then
+					mainAxisCoord = limitMax
+				end
+			end
+
+			if checkCrossAxis then
+				local len = if mainAxis == "y" then "width" else "height"
+				local isOriginSide = Array.includes({ "top", "left" }, getSide(placement :: any))
+				local limitMin = rects.reference[crossAxis]
+					- rects.floating[len]
+					+ (if isOriginSide
+						then if middlewareData.offset then middlewareData.offset[crossAxis] or 0 else 0
+						else 0)
+					+ (if isOriginSide then 0 else computedOffset.crossAxis)
+				local limitMax = rects.reference[crossAxis]
+					+ rects.reference[len]
+					+ (if isOriginSide
+						then 0
+						else if middlewareData.offset then middlewareData.offset[crossAxis] or 0 else 0)
+					- (if isOriginSide then 0 else computedOffset.crossAxis)
+
+				if crossAxisCoord < limitMin then
+					crossAxisCoord = limitMin
+				elseif crossAxisCoord > limitMax then
+					crossAxisCoord = limitMax
+				end
+			end
+
+			return {
+				[mainAxis] = mainAxisCoord,
+				[crossAxis] = crossAxisCoord,
+			}
+		end,
+	}
+end
+
 return {
 	shift = shift,
+	limitShift = limitShift,
 }

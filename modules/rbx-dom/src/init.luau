@@ -23,4 +23,5 @@ return {
 	shift = core.shift,
 	arrow = core.arrow,
 	offset = core.offset,
+	limitShift = core.limitShift,
 }
