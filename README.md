@@ -17,7 +17,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
 
 ## Progress
 
-> Status: Usable... probably. I wouldn't suggest using this in production yet.
+> Status: Most of the middleware is completely untested. I wouldn't suggest using this in production yet.
 
 - [ ] [`core`](/modules/core/)
   - [x] `computePosition`, `computeCoordsFromPlacement`, and `detectOverflow`
@@ -28,7 +28,7 @@ Currently there is no direct documentation for the Roblox version. Please refer 
     - [x] `shift`
     - [x] `flip`
     - [x] `arrow`
-    - [ ] `autoPlacement`
+    - [x] `autoPlacement`
     - [ ] `inline`
 - [x] [`utils`](/modules/rbx-dom/)
 - [x] [`rbx-dom`](/modules/rbx-dom/)
