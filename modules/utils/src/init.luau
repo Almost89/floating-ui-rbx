@@ -53,7 +53,7 @@ local oppositeAlignmentMap = table.freeze({
 })
 
 -- extra utils start
-local function await<T>(value: T | Promise<T>): T
+local function await<T>(value: Promise<T> | T): T
 	return if Promise.is(value) then select(2, (value :: Promise<T>):await()) :: any else value
 end
 local function merge(...: { [any]: any }?): { [any]: any }
