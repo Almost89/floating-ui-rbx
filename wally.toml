@@ -1,7 +1,7 @@
 [package]
 name = "almost89/floating-ui-donotpublish"
 version = "0.1.0"
-exclude = ["**"]
+private = true
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
