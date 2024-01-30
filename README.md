@@ -20,9 +20,9 @@ Currently there is no documentation for the Roblox version. Please refer to [`fl
 > [!WARNING]
 > I wouldn't suggest using this in production as it hasn't been tested.
 
-- [ ] [`core`](/modules/core/)
+- [x] [`core`](/modules/core/)
   - [x] `computePosition`, `computeCoordsFromPlacement`, and `detectOverflow`
-  - [ ] middleware
+  - [x] middleware
     - [x] `hide`
     - [x] `size`
     - [x] `offset`
@@ -30,7 +30,7 @@ Currently there is no documentation for the Roblox version. Please refer to [`fl
     - [x] `flip`
     - [x] `arrow`
     - [x] `autoPlacement`
-    - [ ] `inline`
+    - [x] `inline`
 - [x] [`utils`](/modules/rbx-dom/)
 - [x] [`rbx-dom`](/modules/rbx-dom/)
   - [x] platform

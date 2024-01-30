@@ -11,6 +11,7 @@ local flip = require(script.middleware.flip).flip
 local size = require(script.middleware.size).size
 local arrow = require(script.middleware.arrow).arrow
 local offset = require(script.middleware.offset).offset
+local inline = require(script.middleware.inline).inline
 local detectOverflow = require(script.detectOverflow).detectOverflow
 local computePosition = require(script.computePosition).computePosition
 local rectToClientRect = require(script.Parent["floating-ui-utils"]).rectToClientRect
@@ -59,5 +60,6 @@ return {
 	arrow = arrow,
 	shift = shift,
 	offset = offset,
+	inline = inline,
 	limitShift = limitShift,
 }
