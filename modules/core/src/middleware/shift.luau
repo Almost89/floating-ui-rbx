@@ -55,7 +55,8 @@ export type ShiftOptions = DetectOverflowOptions & {
 	keep it in view when it will overflow the clipping boundary.
 	@see https://floating-ui.com/docs/shift
 ]]
-local shift = function(options: ShiftOptions | Derivable<ShiftOptions>): Middleware
+local shift = function(options: (ShiftOptions | Derivable<ShiftOptions>)?): Middleware
+	options = options or {}
 	return {
 		name = "shift",
 		options = options,
