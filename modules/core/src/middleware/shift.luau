@@ -76,7 +76,7 @@ local shift = function(options: ShiftOptions | Derivable<ShiftOptions>): Middlew
 					}
 
 				evaluatedClone.mainAxis, evaluatedClone.crossAxis, evaluatedClone.limiter = nil, nil, nil
-				detectOverflowOptions = evaluated
+				detectOverflowOptions = evaluatedClone
 			end
 
 			local coords = { x = x, y = y }
