@@ -31,7 +31,7 @@ Currently there is no documentation for the Roblox version. Please refer to [`fl
     - [x] `arrow`
     - [x] `autoPlacement`
     - [x] `inline`
-- [x] [`utils`](/modules/rbx-dom/)
+- [x] [`utils`](/modules/utils/)
 - [x] [`rbx-dom`](/modules/rbx-dom/)
   - [x] platform
     - [x] `getElementRects`, `getDimensions`, and `getClippingRect`
