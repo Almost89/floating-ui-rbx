@@ -90,7 +90,7 @@ export type InlineOptions = {
 	over multiple lines, such as hyperlinks or range selections.
 	@see https://floating-ui.com/docs/inline
 ]]
-local function inline(options: (InlineOptions | Derivable<InlineOptions>)?): Middleware
+local inline = function(options: (InlineOptions | Derivable<InlineOptions>)?): Middleware
 	options = options or {}
 	return {
 		name = "inline",
